@@ -10,6 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Entity
+@Getter
 @Table(name = "상품정보")
 public class Product {
 
@@ -33,10 +34,10 @@ public class Product {
     private String name;
 
     @Column(name = "상품정보_origin_price", length = 255)
-    private String originPrice;
+    private Integer originPrice;
 
     @Column(name = "상품정보_converted_price", length = 255)
-    private String convertedPrice;
+    private Integer convertedPrice;
 
     @Column(name = "상품정보_exchange_rate", length = 255)
     private String exchangeRate;
