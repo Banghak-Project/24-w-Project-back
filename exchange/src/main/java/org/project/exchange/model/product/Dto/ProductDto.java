@@ -8,32 +8,31 @@ import java.util.UUID;
 
 import static java.lang.Integer.parseInt;
 
-
 @Data
 @NoArgsConstructor
 public class ProductDto {
     private String productId;
     private String name;
-    private Integer originPrice;
-    private Integer convertedPrice;
-    private String exchangeRate;
+    private Double originPrice;
+    private Double convertedPrice;
+    private String listId;
+    private String currencyId;
 
-    public Product toEntity(Product product){
+    public Product toEntity(){
         return Product.builder()
                 .productId(productId)
                 .name(name)
-                .originPrice(originPrice)
-                .convertedPrice(convertedPrice)
-                .exchangeRate(exchangeRate)
+                .originPrice(Double.valueOf(originPrice))
+                .convertedPrice(Double.valueOf(convertedPrice))
                 .build();
     }
 
-    public ProductDto(String originPrice, String exchangeRate) {
-        this.productId = UUID.randomUUID().toString();;
+    public ProductDto(Double originPrice, String listId, String currencyId) {
+        this.productId = UUID.randomUUID().toString();
         this.name = "empty";
-        this.originPrice = parseInt(originPrice.toString());
-        this.convertedPrice = parseInt(originPrice.toString()) * parseInt(exchangeRate.toString());
-        this.exchangeRate = exchangeRate;
+        this.originPrice = Double.valueOf(originPrice);
+        this.convertedPrice = originPrice * 1; // 1대신 currency 불러와서 넣어야함
+        this.listId = listId;
+        this.currencyId = currencyId;
     }
-
 }
