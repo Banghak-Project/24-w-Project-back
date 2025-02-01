@@ -15,7 +15,7 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id", nullable = false) // 상품 ID
-    private String productId;
+    private Long productId;
 
     @Column(name = "name", nullable = false, length = 100) // 상품 이름
     private String name;
@@ -28,19 +28,18 @@ public class Product {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "list_id") // 리스트 ID
-    private Lists list;
+    private Lists lists;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "currency_id") // 통화 ID
     private Currency currency;
 
     @Builder
-    public Product(String productId, String name, Double originPrice, Double convertedPrice, Lists list, Currency currency) {
-        this.productId = productId;
+    public Product(String name, Double originPrice, Double convertedPrice, Lists lists, Currency currency) {
         this.name = name;
         this.originPrice = originPrice;
         this.convertedPrice = convertedPrice;
-        this.list = list;
+        this.lists = lists;
         this.currency = currency;
     }
 }

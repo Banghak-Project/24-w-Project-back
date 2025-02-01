@@ -19,7 +19,7 @@ public class ProductRepository{
         em.persist(product);
     }
     //상세,edit
-    public Optional<Product> findById(String product_id){
+    public Optional<Product> findById(Long product_id){
         return Optional.ofNullable(em.find(Product.class, product_id));
     }
     //list 상관없이 모든 Product
@@ -27,16 +27,10 @@ public class ProductRepository{
         return em.createQuery("SELECT p FROM Product p", Product.class).getResultList();
     }
     //list별 product
-    public List<Product> findByListId(String listId){
-        return em.createQuery("SELECT p FROM Product p WHERE p.list = :listId", Product.class)
+    public List<Product> findByListId(Long listId){
+        return em.createQuery("SELECT p FROM Product p WHERE p.lists.id = :listId", Product.class)
                 .setParameter("listId", listId)
                 .getResultList();
-    }
-    //list 통째로 삭제
-    public void deleteAllByListId(String listId){
-        em.createQuery("DELETE FROM Product p WHERE p.list = :listId")
-                .setParameter("listId", listId)
-                .executeUpdate();
     }
 
     //특정 product 삭제
@@ -44,8 +38,8 @@ public class ProductRepository{
         em.remove(product);
     }
 
-    public void deleteByListId(String listId) {
-        em.createQuery("DELETE FROM Product p WHERE p.list = :listId")
+    public void deleteByListId(Long listId) {
+        em.createQuery("DELETE FROM Product p WHERE p.lists.id = :listId")
                 .setParameter("listId", listId)
                 .executeUpdate();
     }
