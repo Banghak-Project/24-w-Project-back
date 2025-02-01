@@ -1,4 +1,4 @@
-package org.project.exchange.model.list;
+package org.project.exchange.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.project.exchange.model.list.Dto.ListsRequestDto;
