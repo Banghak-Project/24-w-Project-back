@@ -1,36 +1,45 @@
 package org.project.exchange.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.project.exchange.model.list.Dto.ListsRequestDto;
 import org.project.exchange.model.list.Dto.ListsResponseDto;
+import org.project.exchange.model.list.Lists;
 import org.project.exchange.model.list.service.ListsService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
-@RequestMapping("/lists")
+@RequestMapping("/api/lists")
 @RequiredArgsConstructor
 public class ListsController {
     private final ListsService listsService;
 
-    // 모든 리스트 조회
+    @PostMapping("/add")
+    public ResponseEntity<Lists> createList(@RequestBody ListsRequestDto requestDto) {
+        System.out.println("Received request to create list: " + requestDto.getName());
+        Lists newLists = listsService.createList(requestDto);
+        System.out.println("Created new list with ID: " + newLists.getListId());
+        return ResponseEntity.status(HttpStatus.CREATED).body(newLists);
+    }
+
     @GetMapping
-    public List<ListsResponseDto> getAllLists() {
-        return listsService.showAllLists();
+    public ResponseEntity<List<ListsResponseDto>> getAllLists() {
+        List<ListsResponseDto> lists = listsService.showAllLists();
+        return ResponseEntity.ok(lists);
     }
 
-    // 리스트 생성
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createList(@RequestBody ListsRequestDto requestDto) {
-        listsService.createList(requestDto);
-    }
-
-    // 리스트 삭제
-    @DeleteMapping("/{id}")
-    public void deleteList(@PathVariable Long id) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteList(@PathVariable Long id) {
         listsService.deleteList(id);
+        return ResponseEntity.noContent().build();//204 No Content반환
     }
+    //총금액표시
+
+    //일 소비 총액 표시
 }
+

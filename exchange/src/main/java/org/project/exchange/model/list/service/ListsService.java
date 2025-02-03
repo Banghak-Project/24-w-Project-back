@@ -33,11 +33,11 @@ public class ListsService {
                 .collect(Collectors.toList());
     }
 
-    public void createList(ListsRequestDto requestDto) {
-        User user = userRepository.findById(requestDto.getUserId())
+    public Lists createList(ListsRequestDto requestDto) {
+        User user = userRepository.findByUserId(requestDto.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 존재하지 않습니다."));
-        Lists lists = requestDto.toEntity(user);
-        listsRepository.save(lists);
+        Lists newLists = requestDto.toEntity(user);
+        return listsRepository.save(newLists);
     }
     public void deleteList(Long id) {listsRepository.deleteById(id);}
 }

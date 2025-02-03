@@ -29,13 +29,13 @@ public class ProductService {
     // 3. product 수정
     // 4. 각 product 삭제
     // 5. list별 product 삭제
-    public List<ProductResponseDto> findByListId(Long listId) {
+    public List<ProductResponseDto> findByListsId(Long listId) {
         return productRepository.findByListId(listId)
                 .stream()
                 .map(ProductResponseDto::new)
                 .collect(Collectors.toList());
     }
-    public void save(ProductRequestDto requestDto) {
+    public Product save(ProductRequestDto requestDto) {
         Lists lists = listsRepository.findById(requestDto.getListId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 리스트가 존재하지 않습니다."));
         Currency currency = currencyRepository.findById(requestDto.getCurrencyId())
@@ -43,14 +43,26 @@ public class ProductService {
 
         Product product = requestDto.toEntity(lists, currency);
         productRepository.save(product);
+        return product;
     }
-    public void update(Long productId, ProductRequestDto requestDto) {
+    public Product update(Long productId, ProductRequestDto requestDto) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("상품이 존재하지 않습니다."));
 
         product.setName(requestDto.getName());
         product.setOriginPrice(requestDto.getOriginPrice());
         product.setConvertedPrice(requestDto.getConvertedPrice());
+
+        Lists lists = listsRepository.findById(requestDto.getListId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 리스트가 존재하지 않습니다."));
+        Currency currency = currencyRepository.findById(requestDto.getCurrencyId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 통화가 존재하지 않습니다."));
+
+        product.setLists(lists);
+        product.setCurrency(currency);
+
+        productRepository.save(product);
+        return product;
     }
 
 
@@ -62,5 +74,9 @@ public class ProductService {
 
     public void deleteByListId(Long listId) {
         productRepository.deleteByListId(listId);
+    }
+
+    public List<Product> findAll() {
+        return productRepository.findAll();
     }
 }

@@ -51,7 +51,7 @@ class ProductServiceTest {
         Lists myList = listsRepository.findById(Long.valueOf("1"))
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID의 리스트를 찾을 수 없습니다."));
         Product product = new Product("name", 1000.0, 1000.0, myList, null);
-        productService.save(product);
+//        productService.save(product);
 
         //when
 

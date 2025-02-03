@@ -28,8 +28,13 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationEntryPoint entryPoint;
 
-    private final String[] allowedUrls = { "/api/auth/signin", "/api/auth/signup", "/api/auth/kakao/signin",
-            "/api/v1/**" }; // 허용할 URL 목록
+    private final String[] allowedUrls = { "/api/auth/signin",
+            "/api/auth/signup",
+            "/api/auth/kakao/signin",
+            "/api/v1/**",
+            "/api/auth/signup/otp",
+            "/api/auth/signup/otp/check",
+            "/api/v1/**", "/api/lists/**","/api/lists/add"}; // 허용할 URL 목록
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -38,6 +43,7 @@ public class SecurityConfig {
                     @Override
                     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                         CorsConfiguration config = new CorsConfiguration();
+                        config.setAllowedOrigins(Collections.singletonList("http://localhost:8080"));
                         config.setAllowedOrigins(Collections.singletonList("http://localhost:5173"));
                         config.setAllowedMethods(Collections.singletonList("*"));
                         config.setAllowCredentials(true);
