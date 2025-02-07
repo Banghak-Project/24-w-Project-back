@@ -27,8 +27,7 @@ public class Currency {
     private List<Product> products;
 
     @Builder
-    public Currency(Long currencyId, String code, Double exchangeRate) {
-        this.currencyId = currencyId;
+    public Currency(String code, Double exchangeRate) {
         this.code = code;
         this.exchangeRate = exchangeRate;
     }

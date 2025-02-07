@@ -76,10 +76,9 @@ public class User {
     private List<Lists> lists; // 사용자가 생성한 리스트들
 
     @Builder(toBuilder = true)
-    public User(Long userId, String userName, Date userDateOfBirth, String userPhoneNumber,
+    public User(String userName, Date userDateOfBirth, String userPhoneNumber,
             boolean userGender, String userEmail, String userUsername, String userPassword,
             Date userCreatedAt, Date userUpdatedAt) {
-        this.userId = userId;
         this.userName = userName;
         this.userDateOfBirth = userDateOfBirth;
         this.userPhoneNumber = userPhoneNumber;

@@ -4,10 +4,10 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.project.exchange.model.currency.Currency;
 import org.project.exchange.model.list.Lists;
-import org.project.exchange.model.photo.Photo;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Setter
 @Entity
 @Table(name = "product") // 상품 정보 테이블
 public class Product {
@@ -28,25 +28,18 @@ public class Product {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "list_id") // 리스트 ID
-    private Lists list;
+    private Lists lists;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "currency_id") // 통화 ID
     private Currency currency;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "photo_id") // 사진 ID
-    private Photo photo;
-
     @Builder
-    public Product(Long productId, String name, Double originPrice, Double convertedPrice, Lists list, Currency currency,
-            Photo photo) {
-        this.productId = productId;
+    public Product(String name, Double originPrice, Double convertedPrice, Lists lists, Currency currency) {
         this.name = name;
         this.originPrice = originPrice;
         this.convertedPrice = convertedPrice;
-        this.list = list;
+        this.lists = lists;
         this.currency = currency;
-        this.photo = photo;
     }
 }
