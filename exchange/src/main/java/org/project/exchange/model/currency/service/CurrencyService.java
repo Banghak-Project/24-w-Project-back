@@ -56,7 +56,7 @@ public class CurrencyService {
         String formattedNow = myDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
         String urlStr = String.format(
-                "https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?data=AP01&authkey=%s&searchdate=20250430",
+                "https://oapi.koreaexim.go.kr/site/program/financial/exchangeJSON?data=AP01&authkey=%s&searchdate=20250430",
                 currencyApiProperties.getKey(), formattedNow
         );
 
@@ -72,7 +72,7 @@ public class CurrencyService {
             connection.setRequestProperty("User-Agent", "Mozilla/5.0");
 
             int status = connection.getResponseCode();
-            log.info("🌐 HTTP status: {}", status);
+            log.info("HTTP status: {}", status);
 
             InputStreamReader streamReader = null;
 
